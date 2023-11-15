@@ -15,8 +15,14 @@ app.use(express.json());
 app.use(bodyParser.json({limit:'5mb'}));
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.listen(3000,()=>{
-    mongoose.connect(uri).then(
+
+
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT,()=>{
+  console.log(`Server is running on http://localhost:${PORT}`);
+  mongoose.connect(uri).then(
         ()=>{ console.log('Successfully connected to ' + db)},
         error => { console.log(error) }
     )
@@ -28,7 +34,8 @@ app.get('/tasks', async(req, res) => {
         const tasks = await Task.find({});
         res.json(tasks);
     }catch(error){
-        res.status(500).json({error: error.message })
+        console.error(error);
+        res.status(500).json({error: "Internal Server Error"})
     }
 });
 

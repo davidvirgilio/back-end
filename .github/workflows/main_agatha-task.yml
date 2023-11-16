@@ -59,4 +59,4 @@ jobs:
           app-name: 'agatha-task'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_09C7A001AC4D4D9892377AB23F7E3643 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AEFEB330774D4AF1AAA05345444A4167 }}

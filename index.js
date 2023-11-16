@@ -39,96 +39,96 @@ app.get('/tasks', async(req, res) => {
     }
 });
 
-app.post('/tasks', async (req, res) => {
-    try {
-      const newTask = new Task(req.body);
-      await newTask.save();
-      res.status(201).json(newTask);
-    } catch(error){
-        res.status(500).json({error: error.message})
-    }
-});
 
 app.delete('/tasks/:taskId', async (req, res) => {
-    try {
-      const taskId = req.params.taskId;
-      const deletedTask = await Task.findByIdAndDelete(taskId);
-      
-      if (!deletedTask) {
-        return res.status(404).json({ error: 'Task not found' });
-      }
-  
-      res.json(deletedTask);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+  try {
+    const taskId = req.params.taskId;
+    const deletedTask = await Task.findByIdAndDelete(taskId);
+    
+    if (!deletedTask) {
+      return res.status(404).json({ error: 'Task not found' });
     }
-  });
-  
-  app.put('/tasks/:taskId', async (req, res) => {
-    try {
-      const taskId = req.params.taskId;
-      const updatedTask = await Task.findByIdAndUpdate(taskId, req.body, { new: true });
+    
+    res.json(deletedTask);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/tasks/:taskId', async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const updatedTask = await Task.findByIdAndUpdate(taskId, req.body, { new: true });
+    
+    if (!updatedTask) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    
+    res.json(updatedTask);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/tasks/:taskId/completed', async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const newValue = req.body.completed;
+    
+    const updatedTask = await Task.findByIdAndUpdate(taskId,
+      { completed: newValue}, { new: true });
       
       if (!updatedTask) {
         return res.status(404).json({ error: 'Task not found' });
       }
-  
+      
       res.json(updatedTask);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   });
   
-  app.post('/tasks/:taskId/completed', async (req, res) => {
-    try {
-      const taskId = req.params.taskId;
-      const newValue = req.body.completed;
-      
-      const updatedTask = await Task.findByIdAndUpdate(taskId,
-        { completed: newValue}, { new: true });
-        
-        if (!updatedTask) {
-          return res.status(404).json({ error: 'Task not found' });
-        }
-        
-        res.json(updatedTask);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    });
-    
-    
-    // User authentication
-
-    app.get('/users', async(req, res) => {
-      try{
-          const users = await User.find({});
-          res.json(users);
-      }catch(error){
-          res.status(500).json({error: error.message })
-      }
+  
+  // User authentication
+  
+  app.get('/users', async(req, res) => {
+    try{
+      const users = await User.find({});
+      res.json(users);
+    }catch(error){
+      res.status(500).json({error: error.message })
+    }
   });
-
+  
   app.get('/users/:userEmail', async(req,res)=>{
-      try{
-        const userEmail = req.params.userEmail;
-        const user = await User.findOne({email : userEmail}).exec()
-        res.json(user);
-      }catch(error){
-        res.status(500).json({error: error.message})
-      }
+    try{
+      const userEmail = req.params.userEmail;
+      const user = await User.findOne({email : userEmail}).exec()
+      res.json(user);
+    }catch(error){
+      res.status(500).json({error: error.message})
+    }
   });
+  
+  app.post('/users', async (req, res) => {
+    try {
+      const newUser = new User(req.body);
+      
+      await newUser.save();
+      
+      res.status(201).json(newUser);
+    } catch(error){
+      res.status(500).json({error: error.message})
+    }
     
-    app.post('/users', async (req, res) => {
+  });
+  
+  app.post('/tasks', async (req, res) => {
       try {
-        const newUser = new User(req.body);
-        
-        await newUser.save();
-        
+        const newTask = new Task(req.body);
+        await newTask.save();
         res.status(201).json(newTask);
       } catch(error){
           res.status(500).json({error: error.message})
       }
-
-    });
-    
+  });

@@ -119,7 +119,7 @@ app.delete('/tasks/:taskId', async (req, res) => {
       }
   });
     
-    app.get('/users/:userId', async (req, res) => {
+    app.post('/users', async (req, res) => {
       try {
         const newUser = new User(req.body);
         

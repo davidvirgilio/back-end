@@ -108,8 +108,18 @@ app.delete('/tasks/:taskId', async (req, res) => {
           res.status(500).json({error: error.message })
       }
   });
+
+  app.get('/users/:userEmail', async(req,res)=>{
+      try{
+        const userEmail = req.params.userEmail;
+        const user = await User.findOne({email : userEmail}).exec()
+        res.json(user);
+      }catch(error){
+        res.status(500).json({error: error.message})
+      }
+  });
     
-    app.put('/users/', async (req, res) => {
+    app.get('/users/:userId', async (req, res) => {
       try {
         const newUser = new User(req.body);
         

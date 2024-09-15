@@ -6,6 +6,6 @@
             "destination": "/api"
         }
     ],
-    "buildCommand": "nodemon index.js",
+    "buildCommand": "npm build",
     "devCommand": "nodemon index.js"
 }

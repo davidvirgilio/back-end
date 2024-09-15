@@ -1,1 +1,13 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
+{ 
+    "version": 2,
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/api"
+        }
+    ],
+    "buildCommand": "nodemon index.js",
+    "devCommand": "nodemon index.js",
+    "port": 3000
+
+}

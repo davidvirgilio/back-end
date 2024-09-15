@@ -7,7 +7,5 @@
         }
     ],
     "buildCommand": "nodemon index.js",
-    "devCommand": "nodemon index.js",
-    "port": 3000
-
+    "devCommand": "nodemon index.js"
 }
